@@ -333,7 +333,7 @@ main (int argc, char **argv)
   } else {
 	  logInterval = 1000000;
   }
- 
+printf("logInterval %d\n",logInterval); 
   // create thread for timeout (to avoid hangup in open_serial, e. g. when the device can not be opened)
   i_ret = pthread_create (&thread, NULL, func_timeout, (void *) id);    //(void *(*)(void *))
   if (i_ret)
@@ -441,11 +441,11 @@ main (int argc, char **argv)
     
     currentTime = get_time();
     
-    if ((currentTime - lastLoggedTime) >= logInterval || (tf < logInterval * 1000000)) {
-		lastLoggedTime = currentTime;
-		printf ("%0.1f %0.3f %s\n", tf / 10., it, units);
-		fflush (stdout);
-	}
+    if ((currentTime - lastLoggedTime) >= logInterval) {
+      lastLoggedTime = currentTime;
+      printf ("%0.1f %0.3f %s\n", tf / 10., it, units);
+      fflush (stdout);
+    }
     // usleep(100); // wait 100 ms for next reading/writing (not really nessisary with VC820/VC840)
   }
   pthread_exit (NULL);
